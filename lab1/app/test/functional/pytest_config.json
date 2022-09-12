@@ -1,0 +1,130 @@
+{
+  "cases": [
+    {
+      "name": "Test isosceles triangle",
+      "description": "",
+      "exec_args": [
+        "1",
+        "2",
+        "2"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test1/test1.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test1/test1.out"
+      },
+      "return_code": 0
+    },
+    {
+      "name": "Test equilateral triangle",
+      "description": "",
+      "exec_args": [
+        "2",
+        "2",
+        "2"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test2/test2.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test2/test2.out"
+      },
+      "return_code": 0
+    },
+    {
+      "name": "Test default triangle",
+      "description": "",
+      "exec_args": [
+        "1",
+        "2",
+        "3"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test3/test3.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test3/test3.out"
+      },
+      "return_code": 0
+    },
+    {
+      "name": "Test not a triangle",
+      "description": "",
+      "exec_args": [
+        "0",
+        "2",
+        "2"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test4/test4.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test4/test4.out"
+      },
+      "return_code": 0
+    },
+    {
+      "name": "Test out of range (negative) triangle side",
+      "description": "",
+      "exec_args": [
+        "-1",
+        "2",
+        "2"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test5/test5.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test5/test5.out"
+      },
+      "return_code": 1
+    },
+    {
+      "name": "Test out of range (too big) triangle side",
+      "description": "",
+      "exec_args": [
+        "329234098232804983",
+        "2",
+        "2"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test6/test6.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test6/test6.out"
+      },
+      "return_code": 1
+    },
+    {
+      "name": "Test invalid arguments (letters in arguments) triangle side",
+      "description": "",
+      "exec_args": [
+        "3a3",
+        "2",
+        "2"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test7/test7.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test7/test7.out"
+      },
+      "return_code": 1
+    }
+  ]
+}
