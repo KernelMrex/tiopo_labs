@@ -3,9 +3,18 @@
 #include <cstdlib>
 #include <iostream>
 
+inline bool isNumber(const std::string& s)
+{
+	return s.find_first_not_of("0123456789") == std::string::npos;
+}
+
 inline uint stoui(const std::string& s)
 {
-	auto val = std::stoul(s);
+	if (!isNumber(s))
+	{
+		throw std::invalid_argument("value must be numeric");
+	}
+	auto val = std::stoul(s, nullptr, 10);
 	if (val > UINT_MAX)
 	{
 		throw std::out_of_range("value is out of range");
