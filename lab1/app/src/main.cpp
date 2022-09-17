@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <iostream>
 
+constexpr uint MAX_ALLOWED_INPUT = UINT_MAX / 2 - 1;
+
 inline bool isNumber(const std::string& s)
 {
 	return s.find_first_not_of("0123456789") == std::string::npos;
@@ -15,7 +17,7 @@ inline uint stoui(const std::string& s)
 		throw std::invalid_argument("value must be numeric");
 	}
 	auto val = std::stoul(s, nullptr, 10);
-	if (val > UINT_MAX)
+	if (val > MAX_ALLOWED_INPUT)
 	{
 		throw std::out_of_range("value is out of range");
 	}

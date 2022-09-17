@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <iostream>
 #include <iterator>
 
 constexpr uint TRIANGLE_SIDES_AMOUNT = 3;
@@ -28,6 +29,14 @@ public:
 		for (auto side : m_sides)
 		{
 			if (side == 0)
+			{
+				return Type::NOT_A_TRIANGLE;
+			}
+		}
+
+		for (int i = 0; i < TRIANGLE_SIDES_AMOUNT; i++)
+		{
+			if (m_sides[(i + 1) % 3] + m_sides[(i + 2) % 3] <= m_sides[i])
 			{
 				return Type::NOT_A_TRIANGLE;
 			}

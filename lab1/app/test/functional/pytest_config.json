@@ -40,9 +40,9 @@
       "name": "Test default triangle",
       "description": "",
       "exec_args": [
-        "1",
-        "2",
-        "3"
+        "3",
+        "4",
+        "5"
       ],
       "expected": {
         "type": "file",
@@ -61,6 +61,24 @@
         "0",
         "2",
         "2"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test4/test4.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test4/test4.out"
+      },
+      "return_code": 0
+    },
+    {
+      "name": "Test not a triangle",
+      "description": "",
+      "exec_args": [
+        "1",
+        "2",
+        "3"
       ],
       "expected": {
         "type": "file",
@@ -125,6 +143,114 @@
         "path": "./data/test7/test7.out"
       },
       "return_code": 1
+    },
+    {
+      "name": "Test invalid argument triangle side",
+      "description": "",
+      "exec_args": [
+        "1.1",
+        "2",
+        "2"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test8/test8.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test8/test8.out"
+      },
+      "return_code": 1
+    },
+    {
+      "name": "Test not enough arguments",
+      "description": "",
+      "exec_args": [
+        "1",
+        "1"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test9/test9.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test9/test9.out"
+      },
+      "return_code": 1
+    },
+    {
+      "name": "Test not enough arguments",
+      "description": "",
+      "exec_args": [
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test10/test10.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test10/test10.out"
+      },
+      "return_code": 1
+    },
+    {
+      "name": "Test max value on two sides",
+      "description": "",
+      "exec_args": [
+        "1",
+        "2147483641",
+        "2147483641"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test11/test11.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test11/test11.out"
+      },
+      "return_code": 0
+    },
+    {
+      "name": "Test max value on three sides",
+      "description": "",
+      "exec_args": [
+        "2147483641",
+        "2147483641",
+        "2147483641"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test12/test12.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test12/test12.out"
+      },
+      "return_code": 0
+    },
+    {
+      "name": "Test max value on one side",
+      "description": "",
+      "exec_args": [
+        "1",
+        "2",
+        "2147483641"
+      ],
+      "expected": {
+        "type": "file",
+        "path": "./data/test13/test13.expected"
+      },
+      "output": {
+        "type": "file",
+        "path": "./data/test13/test13.out"
+      },
+      "return_code": 0
     }
   ]
 }
