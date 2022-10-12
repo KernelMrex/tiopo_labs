@@ -1,19 +1,48 @@
 package org.volgatech.crawler;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 final public class BadLinksPageCrawler
 {
-    private LinkProcessingStrategy linkProcessingStrategy;
+    private final HttpReader httpReader;
+    private final LinkProcessingStrategy linkProcessingStrategy;
 
     public BadLinksPageCrawler(
+            HttpReader httpReader,
             LinkProcessingStrategy linkProcessingStrategy
     ) {
+        this.httpReader = httpReader;
         this.linkProcessingStrategy = linkProcessingStrategy;
     }
 
-    public void crawl(URL url)
+    public void crawl(URL url) throws IOException, InterruptedException, URISyntaxException
     {
-        // TODO: save http page in buffer, parse and execute link precessing strategy
+        try (var uriStream = httpReader.get(url))
+        {
+            scanForLinks(uriStream);
+        }
+    }
+
+    private void scanForLinks(InputStream in)
+    {
+        var scanner = new Scanner(in, StandardCharsets.UTF_8);
+        var pattern = Pattern.compile("href=\"(.*?)\"");
+        while (scanner.findWithinHorizon(pattern, 0) != null)
+        {
+            var match = scanner.match();
+            try
+            {
+                var url = new URL(match.group(1));
+                linkProcessingStrategy.process(url);
+            }
+            catch (MalformedURLException ignored) {}
+        }
     }
 }

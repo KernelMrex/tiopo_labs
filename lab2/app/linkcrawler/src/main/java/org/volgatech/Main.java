@@ -4,9 +4,11 @@ import org.volgatech.args.ArgsParser;
 import org.volgatech.args.LinkCrawlerCommand;
 import org.volgatech.args.exception.InvalidArgumentException;
 import org.volgatech.crawler.BadLinksPageCrawler;
+import org.volgatech.crawler.HttpReader;
 import org.volgatech.crawler.StoreLinkProcessingStrategy;
 
 import java.io.File;
+import java.net.http.HttpClient;
 
 public class Main
 {
@@ -25,10 +27,21 @@ public class Main
             return;
         }
 
+        var httpClient = HttpClient.newHttpClient();
+        var httpReader = new HttpReader(httpClient);
         var linkStorageStrategy = new StoreLinkProcessingStrategy();
-        var crawler = new BadLinksPageCrawler(linkStorageStrategy);
+        var crawler = new BadLinksPageCrawler(httpReader, linkStorageStrategy);
 
-        crawler.crawl(command.getUrl());
+        try
+        {
+            crawler.crawl(command.getUrl());
+        }
+        catch (Exception e)
+        {
+            System.err.println("Error while crawling " + command.getUrl().toString());
+            System.exit(1);
+            return;
+        }
 
         linkStorageStrategy.getLinkList().forEach(System.out::println);
     }

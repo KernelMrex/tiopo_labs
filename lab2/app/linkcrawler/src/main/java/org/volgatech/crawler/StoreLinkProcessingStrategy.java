@@ -1,15 +1,16 @@
 package org.volgatech.crawler;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 final public class StoreLinkProcessingStrategy implements LinkProcessingStrategy
 {
-    private final ArrayList<URL> linkList;
+    private final Set<URL> linkList;
 
     public StoreLinkProcessingStrategy()
     {
-        this.linkList = new ArrayList<>();
+        this.linkList = new HashSet<>();
     }
 
     @Override
@@ -18,7 +19,7 @@ final public class StoreLinkProcessingStrategy implements LinkProcessingStrategy
         linkList.add(url);
     }
 
-    public ArrayList<URL> getLinkList()
+    public Set<URL> getLinkList()
     {
         return linkList;
     }
