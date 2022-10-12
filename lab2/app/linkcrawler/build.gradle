@@ -1,7 +1,5 @@
 plugins {
     id 'java'
-    id 'application'
-    id 'eclipse'
 }
 
 group 'org.volgatech'
@@ -28,19 +26,15 @@ compileJava {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'org.volgatech.Main'
+        attributes 'Main-Class': 'org.volgatech.linkcrawler.Main'
     }
 }
 
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Main-Class': 'org.volgatech.Main'
+        attributes 'Main-Class': 'org.volgatech.linkcrawler.Main'
     }
     baseName = project.name
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
-}
-
-application {
-    mainClassName = 'org.volgatech.Main'
 }

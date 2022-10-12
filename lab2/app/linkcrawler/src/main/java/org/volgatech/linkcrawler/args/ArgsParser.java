@@ -1,6 +1,6 @@
-package org.volgatech.args;
+package org.volgatech.linkcrawler.args;
 
-import org.volgatech.args.exception.InvalidArgumentException;
+import org.volgatech.linkcrawler.args.exception.InvalidArgumentException;
 import picocli.CommandLine;
 
 final public class ArgsParser

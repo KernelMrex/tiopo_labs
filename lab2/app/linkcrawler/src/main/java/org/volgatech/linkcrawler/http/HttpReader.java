@@ -1,4 +1,4 @@
-package org.volgatech.crawler;
+package org.volgatech.linkcrawler.http;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ final public class HttpReader
         this.httpClient = httpClient;
     }
 
-    InputStream get(URL url) throws IOException, InterruptedException, URISyntaxException
+    public InputStream get(URL url) throws IOException, InterruptedException, URISyntaxException
     {
         var request = HttpRequest.newBuilder(url.toURI()).GET().build();
         var resp = httpClient.send(request, HttpResponse.BodyHandlers.ofInputStream());

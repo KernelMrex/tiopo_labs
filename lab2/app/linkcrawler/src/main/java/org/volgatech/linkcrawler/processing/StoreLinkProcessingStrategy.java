@@ -1,4 +1,4 @@
-package org.volgatech.crawler;
+package org.volgatech.linkcrawler.processing;
 
 import java.net.URL;
 import java.util.HashSet;

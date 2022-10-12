@@ -1,11 +1,11 @@
-package org.volgatech;
+package org.volgatech.linkcrawler;
 
-import org.volgatech.args.ArgsParser;
-import org.volgatech.args.LinkCrawlerCommand;
-import org.volgatech.args.exception.InvalidArgumentException;
-import org.volgatech.crawler.BadLinksPageCrawler;
-import org.volgatech.crawler.HttpReader;
-import org.volgatech.crawler.StoreLinkProcessingStrategy;
+import org.volgatech.linkcrawler.crawler.BadLinksPageCrawler;
+import org.volgatech.linkcrawler.http.HttpReader;
+import org.volgatech.linkcrawler.processing.StoreLinkProcessingStrategy;
+import org.volgatech.linkcrawler.args.ArgsParser;
+import org.volgatech.linkcrawler.args.LinkCrawlerCommand;
+import org.volgatech.linkcrawler.args.exception.InvalidArgumentException;
 
 import java.io.File;
 import java.net.http.HttpClient;

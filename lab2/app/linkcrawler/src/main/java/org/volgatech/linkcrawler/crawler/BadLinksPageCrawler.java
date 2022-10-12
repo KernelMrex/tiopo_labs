@@ -1,4 +1,7 @@
-package org.volgatech.crawler;
+package org.volgatech.linkcrawler.crawler;
+
+import org.volgatech.linkcrawler.http.HttpReader;
+import org.volgatech.linkcrawler.processing.LinkProcessingStrategy;
 
 import java.io.IOException;
 import java.io.InputStream;
