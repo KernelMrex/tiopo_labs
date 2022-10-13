@@ -2,7 +2,7 @@ package org.volgatech.linkcrawler;
 
 import org.volgatech.linkcrawler.crawler.BadLinksPageCrawler;
 import org.volgatech.linkcrawler.http.HttpReader;
-import org.volgatech.linkcrawler.processing.StoreLinkProcessingStrategy;
+import org.volgatech.linkcrawler.processing.SingleHostCrawlingLinkProcessingStrategy;
 import org.volgatech.linkcrawler.args.ArgsParser;
 import org.volgatech.linkcrawler.args.LinkCrawlerCommand;
 import org.volgatech.linkcrawler.args.exception.InvalidArgumentException;
@@ -29,7 +29,7 @@ public class Main
 
         var httpClient = HttpClient.newHttpClient();
         var httpReader = new HttpReader(httpClient);
-        var linkStorageStrategy = new StoreLinkProcessingStrategy();
+        var linkStorageStrategy = new SingleHostCrawlingLinkProcessingStrategy(command.getUrl());
         var crawler = new BadLinksPageCrawler(httpReader, linkStorageStrategy);
 
         try
@@ -43,7 +43,8 @@ public class Main
             return;
         }
 
-        linkStorageStrategy.getLinkList().forEach(System.out::println);
+        linkStorageStrategy.getInternalLinks().forEach(System.out::println);
+        linkStorageStrategy.getExternalLinks().forEach(System.out::println);
     }
 
     private static void printUsage()

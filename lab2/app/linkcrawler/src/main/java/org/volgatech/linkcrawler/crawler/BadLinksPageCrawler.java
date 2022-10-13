@@ -29,11 +29,11 @@ final public class BadLinksPageCrawler
     {
         try (var uriStream = httpReader.get(url))
         {
-            scanForLinks(uriStream);
+            scanForLinks(url, uriStream);
         }
     }
 
-    private void scanForLinks(InputStream in)
+    private void scanForLinks(URL url, InputStream in)
     {
         var scanner = new Scanner(in, StandardCharsets.UTF_8);
         var pattern = Pattern.compile("href=\"(.*?)\"");
@@ -42,8 +42,9 @@ final public class BadLinksPageCrawler
             var match = scanner.match();
             try
             {
-                var url = new URL(match.group(1));
-                linkProcessingStrategy.process(url);
+                var link = match.group(1);
+                URL foundUrl = new URL(!link.startsWith("http") ? (url.getProtocol() + "://" + url.getHost() + url.getPath() + link) : link);
+                linkProcessingStrategy.process(foundUrl);
             }
             catch (MalformedURLException ignored) {}
         }
