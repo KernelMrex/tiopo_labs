@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -72,32 +73,35 @@ final public class BadLinksPageCrawler
             var match = scanner.match();
             try
             {
-                queueProcessing.process(parseUrl(url, match.group(1)), null);
+                parseUrl(url, match.group(1)).ifPresent(value -> queueProcessing.process(value, null));
             }
             catch (MalformedURLException ignored) {}
         }
     }
 
-    private URL parseUrl(URL baseUrl, String link) throws MalformedURLException
+    private Optional<URL> parseUrl(URL baseUrl, String link) throws MalformedURLException
     {
-        String rawLink;
-        if (!link.startsWith("http") && !link.startsWith("//"))
+        if (link.startsWith("tel:") || link.startsWith("mailto:"))
         {
-            var path = Paths.get(link.startsWith("/") ? link : (baseUrl.getPath() + "/" + link)).normalize().toString();
-
-            rawLink = String.format(
-                    "%s://%s%s",
-                    baseUrl.getProtocol(),
-                    baseUrl.getHost(),
-                    removeSuffix(path)
-            );
-        }
-        else
-        {
-            rawLink = link;
+            return Optional.empty();
         }
 
-        return new URL(rawLink);
+        if (link.startsWith("http") || link.startsWith("//"))
+        {
+            return Optional.of(new URL(link));
+        }
+
+        var path = Paths
+                .get(link.startsWith("/") ? link : (baseUrl.getPath() + "/" + link))
+                .normalize()
+                .toString();
+
+        return Optional.of(new URL(String.format(
+                "%s://%s%s",
+                baseUrl.getProtocol(),
+                baseUrl.getHost(),
+                removeSuffix(path)
+        )));
     }
 
     private String removeSuffix(String value)
