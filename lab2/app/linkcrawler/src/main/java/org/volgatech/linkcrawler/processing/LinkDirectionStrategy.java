@@ -4,25 +4,22 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
-final public class SingleHostCrawlingLinkProcessingStrategy implements LinkProcessingStrategy
+final public class LinkDirectionStrategy implements LinkProcessingStrategy<Void>
 {
     private final Set<URL> internalLinks;
-    private final Set<URL> externalLinks;
     private final URL hostUrl;
 
-    public SingleHostCrawlingLinkProcessingStrategy(URL hostUrl)
+    public LinkDirectionStrategy(URL hostUrl)
     {
         this.internalLinks = new HashSet<>();
-        this.externalLinks = new HashSet<>();
         this.hostUrl = hostUrl;
     }
 
     @Override
-    public void process(URL url)
+    public void process(URL url, Void additionalData)
     {
         if (!hostUrl.getHost().equals(url.getHost()))
         {
-            externalLinks.add(url);
             return;
         }
         internalLinks.add(url);
@@ -31,10 +28,5 @@ final public class SingleHostCrawlingLinkProcessingStrategy implements LinkProce
     public Set<URL> getInternalLinks()
     {
         return internalLinks;
-    }
-
-    public Set<URL> getExternalLinks()
-    {
-        return externalLinks;
     }
 }
