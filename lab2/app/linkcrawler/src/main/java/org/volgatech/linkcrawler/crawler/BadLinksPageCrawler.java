@@ -47,20 +47,16 @@ final public class BadLinksPageCrawler
             return;
         }
 
-        if (headResp.getStatusCode() <= 400)
-        {
-            goodLinksStorageProcessing.process(url, headResp.getStatusCode());
-
-            var getResp = httpReader.get(url);
-
-            try (var body = getResp.getBody())
-            {
-                scanForLinks(url, body);
-            }
-        }
-        else
+        if (headResp.getStatusCode() >= 400)
         {
             badLinksStorageProcessing.process(url, headResp.getStatusCode());
+            return;
+        }
+
+        goodLinksStorageProcessing.process(url, headResp.getStatusCode());
+        try (var body = httpReader.get(url).getBody())
+        {
+            scanForLinks(url, body);
         }
     }
 
