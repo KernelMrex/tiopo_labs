@@ -1,14 +1,16 @@
 package org.volgatech.linkcrawler;
 
-import org.volgatech.linkcrawler.crawler.BadLinksPageCrawler;
-import org.volgatech.linkcrawler.crawler.http.Reader;
-import org.volgatech.linkcrawler.processing.LinkDirectionStrategy;
 import org.volgatech.linkcrawler.args.ArgsParser;
 import org.volgatech.linkcrawler.args.LinkCrawlerCommand;
 import org.volgatech.linkcrawler.args.exception.InvalidArgumentException;
+import org.volgatech.linkcrawler.crawler.BadLinksPageCrawler;
+import org.volgatech.linkcrawler.crawler.http.Reader;
+import org.volgatech.linkcrawler.processing.LinkDirectionStrategy;
 import org.volgatech.linkcrawler.processing.StorageStrategy;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.net.http.HttpClient;
 import java.time.LocalDateTime;
@@ -49,6 +51,7 @@ public class Main
                 badLinksStorageProcessingStrategy,
                 new HashSet<>() {{
                     add("text/html; charset=UTF-8");
+                    add("text/html; charset=iso-8859-1");
                 }}
         );
 
@@ -67,10 +70,10 @@ public class Main
                 currentParsedLinks.removeAll(allParsedLinks);
                 allParsedLinks.addAll(currentParsedLinks);
 
-                System.out.printf("Parsed " + urlToCrawl.toString() + " New links %d Total: %d%n", currentParsedLinks.size(), allParsedLinks.size());
+                // TODO: replace with logger and counter of current link to parse
+                System.out.printf("Parsed %s New links %d Total: %d%n", urlToCrawl.toString(), currentParsedLinks.size(), allParsedLinks.size());
 
                 queue.addAll(currentParsedLinks);
-                currentParsedLinks.clear();
             }
         }
         catch (Exception e)
@@ -82,8 +85,8 @@ public class Main
 
         try
         {
-            dumpLinks("out_good.txt", goodLinksStorageProcessingStrategy.getStorage());
-            dumpLinks("out_bad.txt", badLinksStorageProcessingStrategy.getStorage());
+            dumpLinks(command.getGoodLinksFile(), goodLinksStorageProcessingStrategy.getStorage());
+            dumpLinks(command.getBadLinksFile(), badLinksStorageProcessingStrategy.getStorage());
         }
         catch (IOException e)
         {
@@ -93,7 +96,7 @@ public class Main
 
     private static void printUsage()
     {
-        System.out.println("Usage: java -jar " + getExecutableName() + " <URL>");
+        System.out.println("Usage: java -jar " + getExecutableName() + " <URL> <INPUT-FILE> <OUTPUT-FILE>");
     }
 
     private static String getExecutableName()
@@ -105,9 +108,9 @@ public class Main
         return file.getName();
     }
 
-    private static void dumpLinks(String filePath, Map<URL, Integer> links) throws IOException
+    private static void dumpLinks(File file, Map<URL, Integer> links) throws IOException
     {
-        try (var writer = new PrintWriter(filePath))
+        try (var writer = new PrintWriter(file))
         {
             int total = 0;
             for (var entry : links.entrySet())

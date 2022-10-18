@@ -18,11 +18,10 @@ final public class LinkDirectionStrategy implements LinkProcessingStrategy<Void>
     @Override
     public void process(URL url, Void additionalData)
     {
-        if (!hostUrl.getHost().equals(url.getHost()))
+        if (hostUrl.getHost().equals(url.getHost()))
         {
-            return;
+            internalLinks.add(url);
         }
-        internalLinks.add(url);
     }
 
     public Set<URL> getInternalLinks()

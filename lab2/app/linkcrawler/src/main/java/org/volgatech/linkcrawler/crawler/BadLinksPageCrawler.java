@@ -21,7 +21,6 @@ final public class BadLinksPageCrawler
     private final LinkProcessingStrategy<Void> queueProcessing;
     private final LinkProcessingStrategy<Integer> goodLinksStorageProcessing;
     private final LinkProcessingStrategy<Integer> badLinksStorageProcessing;
-
     private final Set<String> allowedContentTypes;
 
     public BadLinksPageCrawler(
@@ -38,8 +37,10 @@ final public class BadLinksPageCrawler
         this.allowedContentTypes = allowedContentTypes;
     }
 
+    // TODO: add proxies and multithreading
     public void crawl(URL url) throws IOException, InterruptedException, URISyntaxException
     {
+        // TODO: fix error
         var headResp = httpReader.head(url);
 
         if (headResp.getContentType().isEmpty() || !allowedContentTypes.contains(headResp.getContentType().get()))
