@@ -1,6 +1,6 @@
-package org.volgatech.linkcrawler.args;
+package linkhamster.cmd.args;
 
-import org.volgatech.linkcrawler.args.exception.InvalidArgumentException;
+import linkhamster.cmd.args.exception.InvalidArgumentException;
 import picocli.CommandLine;
 
 final public class ArgsParser

@@ -1,4 +1,4 @@
-package org.volgatech.linkcrawler.args.exception;
+package linkhamster.cmd.args.exception;
 
 public class InvalidArgumentException extends Exception
 {

@@ -1,4 +1,4 @@
-package org.volgatech.linkcrawler.args;
+package linkhamster.cmd.args;
 
 import picocli.CommandLine.Parameters;
 
