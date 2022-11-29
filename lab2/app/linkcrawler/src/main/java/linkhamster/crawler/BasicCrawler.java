@@ -43,6 +43,11 @@ public class BasicCrawler implements Crawler
         }
     }
 
+    public Map<URL, Integer> getVisited()
+    {
+        return visited;
+    }
+
     private void processOne(URL urlToProcess)
     {
         var resp = spider.get(urlToProcess);

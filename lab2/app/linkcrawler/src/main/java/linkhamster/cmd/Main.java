@@ -6,6 +6,8 @@ import linkhamster.cmd.args.exception.InvalidArgumentException;
 import linkhamster.crawler.BasicCrawler;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.logging.Logger;
 
@@ -34,6 +36,27 @@ public class Main
 
         var crawler = new BasicCrawler(logger, crawlerAllowed);
         crawler.crawl(command.getUrl());
+
+        try (
+            var goodLinksWriter = new PrintWriter(command.getGoodLinksFile());
+            var badLinksWriter = new PrintWriter(command.getBadLinksFile())
+        ) {
+            var visited = crawler.getVisited();
+            visited.forEach((url, statusCode) -> {
+                if (statusCode < 400)
+                {
+                    goodLinksWriter.format("%d | %s\n", statusCode, url);
+                }
+                else
+                {
+                    badLinksWriter.format("%d | %s\n", statusCode, url);
+                }
+            });
+        }
+        catch (FileNotFoundException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void printUsage()
