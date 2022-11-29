@@ -41,16 +41,11 @@ public class Main
             var goodLinksWriter = new PrintWriter(command.getGoodLinksFile());
             var badLinksWriter = new PrintWriter(command.getBadLinksFile())
         ) {
-            var visited = crawler.getVisited();
-            visited.forEach((url, statusCode) -> {
+            crawler.getVisited().forEach((url, statusCode) -> {
                 if (statusCode < 400)
-                {
                     goodLinksWriter.format("%d | %s\n", statusCode, url);
-                }
                 else
-                {
                     badLinksWriter.format("%d | %s\n", statusCode, url);
-                }
             });
         }
         catch (FileNotFoundException e)
