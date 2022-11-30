@@ -1,5 +1,7 @@
 package linkhamster.crawler;
 
+import linkhamster.crawler.failsafe.RetryCommand;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,6 +13,7 @@ public class BasicCrawler implements Crawler
     private final Spider spider;
     private final Parser parser;
     private final HashMap<URL, Integer> visited;
+    @SuppressWarnings("CollectionContainsUrl")
     private final Set<URL> discovered;
     private final Queue<URL> urlQueue;
     private final Logger logger;
@@ -39,7 +42,7 @@ public class BasicCrawler implements Crawler
         {
             var urlToProcess = urlQueue.poll();
             logger.info(String.format("Fetch [%d out of %d] %s", counter++, discovered.size(), urlToProcess.toString()));
-            processOne(urlToProcess);
+            new RetryCommand<>(5, 10000).run(() -> {processOne(urlToProcess); return null;});
         }
     }
 
@@ -72,6 +75,15 @@ public class BasicCrawler implements Crawler
         catch (IOException e)
         {
             throw new RuntimeException(e);
+        }
+        finally
+        {
+            try
+            {
+                resp.body().close();
+            }
+            catch (IOException ignore)
+            {}
         }
     }
 
