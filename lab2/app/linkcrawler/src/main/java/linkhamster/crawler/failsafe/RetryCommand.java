@@ -22,13 +22,6 @@ public class RetryCommand<T> {
         }
         catch (Exception e)
         {
-            try
-            {
-                Thread.sleep(throttleTimeoutMillis);
-            }
-            catch (InterruptedException ignored)
-            {}
-
             return retry(function);
         }
     }
@@ -40,7 +33,12 @@ public class RetryCommand<T> {
         {
             try
             {
+                Thread.sleep(throttleTimeoutMillis);
                 return function.get();
+            }
+            catch (InterruptedException ignored)
+            {
+                throw new RuntimeException("Retry was interrupted on " + retryCounter + " out of " + maxRetries + " tries");
             }
             catch (Exception ex)
             {

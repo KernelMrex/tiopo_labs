@@ -42,7 +42,9 @@ public class BasicCrawler implements Crawler
         {
             var urlToProcess = urlQueue.poll();
             logger.info(String.format("Fetch [%d out of %d] %s", counter++, discovered.size(), urlToProcess.toString()));
-            new RetryCommand<>(5, 10000).run(() -> {processOne(urlToProcess); return null;});
+            new RetryCommand<>(5, 60 * 1000).run(() -> {
+                processOne(urlToProcess); return null;
+            });
         }
     }
 
