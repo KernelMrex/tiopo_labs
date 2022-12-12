@@ -8,6 +8,8 @@ import linkhamster.crawler.BasicCrawler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Logger;
 
@@ -41,11 +43,15 @@ public class Main
             var goodLinksWriter = new PrintWriter(command.getGoodLinksFile());
             var badLinksWriter = new PrintWriter(command.getBadLinksFile())
         ) {
+            HashMap<URL, URL> hashMap = new HashMap<>();
+            crawler.getSiteMap().forEach((from, to) -> to.forEach(toUrl -> hashMap.put(toUrl, from)));
+
             crawler.getVisited().forEach((url, statusCode) -> {
+                var fromUrl = hashMap.get(url);
                 if (statusCode < 400)
-                    goodLinksWriter.format("%d | %s\n", statusCode, url);
+                    goodLinksWriter.format("%d | %s | from: %s\n", statusCode, url, fromUrl);
                 else
-                    badLinksWriter.format("%d | %s\n", statusCode, url);
+                    badLinksWriter.format("%d | %s | from: %s\n", statusCode, url, fromUrl);
             });
         }
         catch (FileNotFoundException e)

@@ -17,6 +17,7 @@ public class BasicCrawler implements Crawler
     private final Set<URL> discovered;
     private final Queue<URL> urlQueue;
     private final Logger logger;
+    private final HashMap<URL, HashSet<URL>> siteMap;
 
     private final Set<String> allowedContentTypes;
 
@@ -30,6 +31,7 @@ public class BasicCrawler implements Crawler
         urlQueue = new LinkedList<>();
         visited = new HashMap<>();
         discovered = new HashSet<>();
+        siteMap = new HashMap<>();
     }
 
     @Override
@@ -51,6 +53,10 @@ public class BasicCrawler implements Crawler
     public Map<URL, Integer> getVisited()
     {
         return visited;
+    }
+
+    public HashMap<URL, HashSet<URL>> getSiteMap() {
+        return siteMap;
     }
 
     private void processOne(URL urlToProcess)
@@ -100,6 +106,15 @@ public class BasicCrawler implements Crawler
             .map(this::removeAnchor) // removing '#.*' anchors
             .filter(url -> !discovered.contains(url)) // check if already discovered this url
             .forEach(url -> {
+                if (siteMap.containsKey(processableUrl))
+                {
+                    siteMap.get(processableUrl).add(url);
+                }
+                else
+                {
+                    siteMap.put(processableUrl, new HashSet<>() {{ add(url); }});
+                }
+
                 discovered.add(url);
                 urlQueue.add(url);
             });
