@@ -9,14 +9,6 @@ public class Currency {
         this.decimalPlaces = decimalPlaces;
     }
 
-    public int getDecimalPlaces() {
-        return decimalPlaces;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {

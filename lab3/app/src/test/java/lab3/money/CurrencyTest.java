@@ -24,4 +24,10 @@ public class CurrencyTest {
         var currency4 = new Currency("USD", 3);
         assertNotEquals(currency3, currency4);
     }
+
+    @Test
+    void mayBeComparedWithNotACurrencyObject() {
+        //noinspection AssertBetweenInconvertibleTypes
+        assertNotEquals(new Currency("USD", 2), "Not a currency object");
+    }
 }
