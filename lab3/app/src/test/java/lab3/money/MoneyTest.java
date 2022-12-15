@@ -43,4 +43,23 @@ public class MoneyTest {
 
         assertThrows(CurrencyDoesNotMatchException.class, () -> money1.add(money2));
     }
+
+    @Test
+    void moneyCanBeSubtractedWithSameCurrency() {
+        var money1 = new Money(30000, new Currency("RUB", 2));
+        var money2 = new Money(10000, new Currency("RUB", 2));
+
+        assertDoesNotThrow(() -> assertEquals(
+                money1.sub(money2),
+                new Money(20000, new Currency("RUB", 2))
+        ));
+    }
+
+    @Test
+    void moneyCanNotBeSubtractedWithDifferentCurrency() {
+        var money1 = new Money(30000, new Currency("RUB", 2));
+        var money2 = new Money(10000, new Currency("USD", 2));
+
+        assertThrows(CurrencyDoesNotMatchException.class, () -> money1.sub(money2));
+    }
 }
