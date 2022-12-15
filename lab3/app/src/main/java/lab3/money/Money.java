@@ -27,19 +27,22 @@ public class Money {
     }
 
     public List<Money> split(int partsAmount) {
+        int signCoefficient = this.amount < 0 ? -1 : 1;
+        var amount = this.amount * signCoefficient;
+
         return new ArrayList<>() {{
             int fullPart = amount / partsAmount;
 
             int withAddition = amount % partsAmount;
             for (int i = 0; i < withAddition; i++)
             {
-                add(new Money(fullPart + 1, currency));
+                add(new Money((fullPart + 1) * signCoefficient, currency));
             }
 
             int withOutAddition = amount - withAddition;
             for (int i = 0; i < withOutAddition; i++)
             {
-                add(new Money(fullPart, currency));
+                add(new Money(fullPart * signCoefficient, currency));
             }
         }};
     }

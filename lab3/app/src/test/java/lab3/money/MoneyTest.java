@@ -62,4 +62,68 @@ public class MoneyTest {
 
         assertThrows(CurrencyDoesNotMatchException.class, () -> money1.sub(money2));
     }
+
+    @Test
+    void moneyCanBeSplittedIntoManyEqualParts() {
+        var money = new Money(400, new Currency("RUB", 2));
+
+        var splittedMoney = money.split(6);
+
+        assertEquals(
+                splittedMoney.get(0),
+                new Money(67, new Currency("RUB", 2))
+        );
+        assertEquals(
+                splittedMoney.get(1),
+                new Money(67, new Currency("RUB", 2))
+        );
+        assertEquals(
+                splittedMoney.get(2),
+                new Money(67, new Currency("RUB", 2))
+        );
+        assertEquals(
+                splittedMoney.get(3),
+                new Money(67, new Currency("RUB", 2))
+        );
+        assertEquals(
+                splittedMoney.get(4),
+                new Money(66, new Currency("RUB", 2))
+        );
+        assertEquals(
+                splittedMoney.get(5),
+                new Money(66, new Currency("RUB", 2))
+        );
+    }
+
+    @Test
+    void negativeMoneyCanBeSplittedIntoManyEqualParts() {
+        var money = new Money(-400, new Currency("RUB", 2));
+
+        var splittedMoney = money.split(6);
+
+        assertEquals(
+                splittedMoney.get(0),
+                new Money(-67, new Currency("RUB", 2))
+        );
+        assertEquals(
+                splittedMoney.get(1),
+                new Money(-67, new Currency("RUB", 2))
+        );
+        assertEquals(
+                splittedMoney.get(2),
+                new Money(-67, new Currency("RUB", 2))
+        );
+        assertEquals(
+                splittedMoney.get(3),
+                new Money(-67, new Currency("RUB", 2))
+        );
+        assertEquals(
+                splittedMoney.get(4),
+                new Money(-66, new Currency("RUB", 2))
+        );
+        assertEquals(
+                splittedMoney.get(5),
+                new Money(-66, new Currency("RUB", 2))
+        );
+    }
 }
