@@ -59,4 +59,8 @@ public class Money {
         return currency.equals(otherMoney.currency)
                 && amount == otherMoney.amount;
     }
+
+    public boolean greaterThan(Money other) {
+        return currency.equals(other.currency) && amount > other.amount;
+    }
 }

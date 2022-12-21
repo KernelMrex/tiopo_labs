@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MoneyTest {
     @Test
-    void moneyCanBeCompared() {
+    void moneyCanBeEqual() {
         assertEquals(
                 new Money(10000, new Currency("RUB", 2)),
                 new Money(10000, new Currency("RUB", 2))
@@ -125,5 +125,17 @@ public class MoneyTest {
                 splittedMoney.get(5),
                 new Money(-66, new Currency("RUB", 2))
         );
+    }
+
+    @Test
+    void moneyCanBeGreaterThanAnotherMoney() {
+        var money = new Money(400, new Currency("RUB", 2));
+        var biggerMoney = new Money(1000, new Currency("RUB", 2));
+        var equalMoney = new Money(400, new Currency("RUB", 2));
+
+        assertFalse(money.greaterThan(biggerMoney));
+        assertTrue(biggerMoney.greaterThan(money));
+        assertFalse(money.greaterThan(equalMoney));
+        assertFalse(money.greaterThan(money));
     }
 }
