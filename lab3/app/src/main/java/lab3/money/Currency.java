@@ -4,7 +4,7 @@ public class Currency {
     private final String code;
     private final int decimalPlaces;
 
-    Currency(String code, int decimalPlaces) {
+    public Currency(String code, int decimalPlaces) {
         this.code = code;
         this.decimalPlaces = decimalPlaces;
     }
