@@ -1,0 +1,91 @@
+{
+    "valid_product": {
+        "category_id": "2",
+        "title": "Valid product title",
+        "content": "content",
+        "price": "300",
+        "old_price": "299.9",
+        "status": "1",
+        "keywords": "valid",
+        "description": "Valid product description",
+        "hit": "1"
+    },
+    "another_one_valid_product": {
+        "category_id": "2",
+        "title": "Another one valid product title",
+        "content": "main",
+        "price": "301",
+        "old_price": "300",
+        "status": "1",
+        "keywords": "valid_2",
+        "description": "Another one valid product description",
+        "hit": "1"
+    },
+    "valid_product_with_category_14": {
+        "category_id": "14",
+        "title": "Valid product with category 14 title",
+        "content": "content",
+        "price": "300",
+        "old_price": "299.9",
+        "status": "1",
+        "keywords": "valid",
+        "description": "Valid product with category 14 description",
+        "hit": "1"
+    },
+    "invalid_product_with_category_15": {
+        "category_id": "15",
+        "title": "Valid product with category 15 description title",
+        "content": "content",
+        "price": "300",
+        "old_price": "299.9",
+        "status": "1",
+        "keywords": "valid",
+        "description": "Valid product with category 14 description title",
+        "hit": "1"
+    },
+    "valid_product_with_hit_1": {
+        "category_id": "1",
+        "title": "Valid product with hit 1 title",
+        "content": "content",
+        "price": "300",
+        "old_price": "299.9",
+        "status": "1",
+        "keywords": "valid",
+        "description": "Valid product with hit 1 description",
+        "hit": "1"
+    },
+    "invalid_product_with_hit_2": {
+        "category_id": "1",
+        "title": "Invalid product with hit 2 title",
+        "content": "content",
+        "price": "300",
+        "old_price": "299.9",
+        "status": "1",
+        "keywords": "invalid",
+        "description": "Invalid product with hit 2 description",
+        "hit": 2
+    },
+    "valid_product_with_status_1": {
+        "category_id": "1",
+        "title": "Valid product with status 1 title",
+        "content": "content",
+        "price": "300",
+        "old_price": "299.9",
+        "status": "1",
+        "keywords": "valid",
+        "description": "Valid product with status 1 description",
+        "hit": "1"
+    },
+    "invalid_product_with_status_2": {
+        "category_id": "1",
+        "title": "Invalid product with status 2 title",
+        "content": "content",
+        "price": "300",
+        "old_price": "299.9",
+        "status": "2",
+        "keywords": "invalid",
+        "description": "Invalid product with status 2 description",
+        "hit": "1"
+    },
+    "null_product": {}
+}
